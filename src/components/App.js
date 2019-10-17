@@ -5,8 +5,14 @@ import ListItem from './list/ListItem'
 
 class App extends React.Component {
 
+  state = {
+    items: []
+  }
+
   addItem = item => {
-    console.log('item, ', item)
+    item.id = Date.now()
+    let newItems = [ ...this.state.items, item ]
+    this.setState({ items: newItems })
   }
 
   render() {
