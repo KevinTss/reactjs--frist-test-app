@@ -16,6 +16,8 @@ class Form extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
 
+        <h3>{this.props.title}</h3>
+
         <input 
           type="text" 
           placeholder="name" 
