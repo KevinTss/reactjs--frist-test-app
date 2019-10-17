@@ -10,8 +10,21 @@ class Form extends React.Component {
   render() {
     return (
       <form>
-        <input type="text" placeholder="name"/>
-        <input type="number" placeholder="quantity"/>
+
+        <input 
+          type="text" 
+          placeholder="name" 
+          value={this.state.name} 
+          onChange={event => this.setState({ name: event.target.value })}
+        />
+
+        <input 
+          type="number" 
+          placeholder="quantity" 
+          value={this.state.quantity} 
+          onChange={event => this.setState({ quantity: event.target.value })}
+          />
+
         <button type="submit">Ajouter</button>
       </form>
     )
