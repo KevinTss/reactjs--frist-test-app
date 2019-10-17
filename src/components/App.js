@@ -1,8 +1,16 @@
 import React from 'react';
 
+import Form from './form/Form'
+import ListItem from './list/ListItem'
+
 class App extends React.Component {
   render() {
-    return (<div>Hello world</div>)
+    return (
+      <div>
+        <Form />
+        <ListItem/>
+      </div>
+    )
   }
 }
 
