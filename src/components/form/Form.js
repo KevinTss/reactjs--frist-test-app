@@ -7,9 +7,14 @@ class Form extends React.Component {
     quantity: 0
   }
 
+  handleSubmit = event => {
+    event.preventDefault()
+    console.log(this.state)
+  }
+
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
 
         <input 
           type="text" 
@@ -22,7 +27,7 @@ class Form extends React.Component {
           type="number" 
           placeholder="quantity" 
           value={this.state.quantity} 
-          onChange={event => this.setState({ quantity: event.target.value })}
+          onChange={event => this.setState({ quantity: Number(event.target.value) })}
           />
 
         <button type="submit">Ajouter</button>
