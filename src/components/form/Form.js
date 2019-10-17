@@ -8,7 +8,13 @@ class Form extends React.Component {
   }
 
   render() {
-    return (<div>Form</div>)
+    return (
+      <form>
+        <input type="text" placeholder="name"/>
+        <input type="number" placeholder="quantity"/>
+        <button type="submit">Ajouter</button>
+      </form>
+    )
   }
 }
 
