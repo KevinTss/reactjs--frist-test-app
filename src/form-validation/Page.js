@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ContactForm from "./ContactForm";
 
-class Index extends Component {
+class Page extends Component {
   render() {
     return (
       <div>
@@ -18,4 +18,4 @@ class Index extends Component {
   }
 }
 
-export default Index;
+export default Page;
