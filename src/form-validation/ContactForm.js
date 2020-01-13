@@ -48,6 +48,24 @@ export default class ContactForm extends Component {
       }
     }
   };
+
+  onInputChange = (event, formKey) => {
+    const updatedForm = { ...this.state.form };
+    const updatedFormValue = { ...updatedForm[formKey] };
+    updatedFormValue.value = event.target.value;
+    updatedForm[formKey] = updatedFormValue;
+    this.setState({ form: updatedForm });
+  };
+
+  onFormSubmit = event => {
+    event.preventDefault();
+    const formValues = {};
+    Object.keys(this.state.form).forEach(formKey => {
+      formValues[formKey] = this.state.form[formKey].value;
+    });
+    console.log("SUBMIT", formValues);
+  };
+
   render() {
     const formElements = Object.keys(this.state.form).map(key => ({
       id: key,
@@ -55,15 +73,17 @@ export default class ContactForm extends Component {
     }));
 
     return (
-      <form>
+      <form onSubmit={this.onFormSubmit}>
         {formElements.map(field => (
           <Input
             key={field.id}
             type={field.config.element}
             config={field.config.config}
             value={field.config.value}
+            onChange={event => this.onInputChange(event, field.id)}
           />
         ))}
+        <button type="submit">Send</button>
       </form>
     );
   }
