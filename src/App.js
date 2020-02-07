@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 
-import "./global/style.css";
+import "./_global/style.css";
 
 // Pages
 import DragAndDropPage from "./drag-and-drop/Page";
