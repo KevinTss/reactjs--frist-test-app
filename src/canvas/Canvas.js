@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { fabric } from "fabric";
 import styled from "styled-components";
 
-const Container = styled.div``;
 const CanvasContainer = styled.div`
   width: 100%;
   height: auto;
@@ -33,13 +32,6 @@ class Canvas extends Component {
     this.canvas = new fabric.Canvas("canvas-id");
     this.canvas.setHeight(this.canvasContainer.offsetHeight);
     this.canvas.setWidth(this.canvasContainer.offsetWidth);
-
-    this.canvas.on("object:scaling", () => {
-      var obj = this.canvas.getActiveObject();
-      console.log("yolo", obj);
-      // $('#rect-width').val(Math.floor(obj.getWidth()));
-      // $('#rect-height').val(Math.floor(obj.getHeight()));
-    });
   };
 
   resizeCanvas = (width = null, height = null) => {
@@ -120,7 +112,7 @@ class Canvas extends Component {
 
   render() {
     return (
-      <Container>
+      <div>
         <div>
           <button onClick={this.addRectangle}>Rectangle</button>
           <button onClick={this.addCircle}>Circle</button>
@@ -133,7 +125,7 @@ class Canvas extends Component {
         <CanvasContainer ref={this.setCanvasContainer}>
           <canvas id="canvas-id" style={{ border: "1px solid black" }} />
         </CanvasContainer>
-      </Container>
+      </div>
     );
   }
 }
