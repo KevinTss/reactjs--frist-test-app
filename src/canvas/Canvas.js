@@ -9,9 +9,18 @@ const CanvasContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.1);
 `;
 
+const getImageRatio = (width, height) => {
+  return width / height;
+};
+
+const getRatioHeight = (width, ratio) => {
+  return width / ratio;
+};
+
 class Canvas extends Component {
   state = {
-    shapes: []
+    shapes: [],
+    imageLinkUrl: ""
   };
 
   componentDidMount() {
@@ -33,14 +42,34 @@ class Canvas extends Component {
     const rectangle = new fabric.Rect({
       left: 20,
       top: 50,
-      fill: "red",
-      width: 200,
-      height: 100
+      fill: "transparent",
+      width: 100,
+      height: 100,
+      stroke: "red",
+      strokeWidth: 1
     });
     const shapes = [...this.state.shapes, rectangle];
-    this.setState({ shapes });
-
     this.canvas.add(rectangle);
+    this.setState({ shapes });
+  };
+
+  addImage = url => {
+    if (!this.canvas) return;
+    fabric.Image.fromURL(url, image => {
+      const imageWidth = this.canvasContainer.offsetWidth;
+      image.scaleToWidth(imageWidth);
+      this.canvas.add(image);
+    });
+  };
+
+  onImageLinkUrlChange = event => {
+    const imageUrl = event.target.value;
+    this.setState({ imageLinkUrl: imageUrl });
+    this.addImage(imageUrl);
+  };
+
+  seeState = () => {
+    console.log(this.state);
   };
 
   render() {
@@ -48,6 +77,11 @@ class Canvas extends Component {
       <Container>
         <div>
           <button onClick={this.addRectangle}>Rectangle</button>
+          <input
+            value={this.state.imageLinkUrl}
+            onChange={this.onImageLinkUrlChange}
+          />
+          <button onClick={this.seeState}>See state</button>
         </div>
         <CanvasContainer ref={this.setCanvasContainer}>
           <canvas id="canvas-id" style={{ border: "1px solid black" }} />
