@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Container = styled.div``;
 const CanvasContainer = styled.div`
   width: 100%;
-  height: 700px;
+  height: auto;
   background-color: rgba(0, 0, 0, 0.1);
 `;
 
@@ -20,7 +20,8 @@ const getRatioHeight = (width, ratio) => {
 class Canvas extends Component {
   state = {
     shapes: [],
-    imageLinkUrl: ""
+    imageLinkUrl: "",
+    canvasImage: null
   };
 
   componentDidMount() {
@@ -32,6 +33,18 @@ class Canvas extends Component {
     this.canvas = new fabric.Canvas("canvas-id");
     this.canvas.setHeight(this.canvasContainer.offsetHeight);
     this.canvas.setWidth(this.canvasContainer.offsetWidth);
+
+    this.canvas.on("object:scaling", () => {
+      var obj = this.canvas.getActiveObject();
+      console.log("yolo", obj);
+      // $('#rect-width').val(Math.floor(obj.getWidth()));
+      // $('#rect-height').val(Math.floor(obj.getHeight()));
+    });
+  };
+
+  resizeCanvas = (width = null, height = null) => {
+    width && this.canvas.setWidth(width);
+    height && this.canvas.setHeight(height);
   };
 
   setCanvasContainer = element => {
@@ -72,9 +85,26 @@ class Canvas extends Component {
   addImage = url => {
     if (!this.canvas) return;
     fabric.Image.fromURL(url, image => {
-      const imageWidth = this.canvasContainer.offsetWidth;
-      image.scaleToWidth(imageWidth);
-      this.canvas.add(image);
+      // We want the image to became this width
+      const imageGoalWidth = this.canvasContainer.offsetWidth;
+      // Find the scale base on the targetted width
+      const scale = imageGoalWidth / image.width;
+      image.set({
+        scaleX: scale,
+        scaleY: scale
+      });
+      // get ratio scaled height to apply it to the canvas
+      // Goal is to fit the canvas with the image size
+      const newGoalHeight = getRatioHeight(
+        image.getScaledWidth(),
+        getImageRatio(image.width, image.height)
+      );
+      this.resizeCanvas(null, newGoalHeight);
+      this.canvas.setBackgroundImage(
+        image,
+        this.canvas.renderAll.bind(this.canvas),
+        {}
+      );
     });
   };
 
