@@ -46,10 +46,26 @@ class Canvas extends Component {
       width: 100,
       height: 100,
       stroke: "red",
+      hasRotatingPoint: false,
       strokeWidth: 1
     });
     const shapes = [...this.state.shapes, rectangle];
     this.canvas.add(rectangle);
+    this.setState({ shapes });
+  };
+
+  addCircle = () => {
+    const circle = new fabric.Circle({
+      radius: 20,
+      left: 0,
+      fill: "transparent",
+      stroke: "blue",
+      strokeWidth: 1,
+      lockUniScaling: true,
+      hasRotatingPoint: false
+    });
+    const shapes = [...this.state.shapes, circle];
+    this.canvas.add(circle);
     this.setState({ shapes });
   };
 
@@ -77,6 +93,7 @@ class Canvas extends Component {
       <Container>
         <div>
           <button onClick={this.addRectangle}>Rectangle</button>
+          <button onClick={this.addCircle}>Circle</button>
           <input
             value={this.state.imageLinkUrl}
             onChange={this.onImageLinkUrlChange}
