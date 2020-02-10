@@ -3,11 +3,31 @@ import { fabric } from "fabric";
 import styled from "styled-components";
 
 const Container = styled.div``;
+const CanvasContainer = styled.div`
+  width: 100%;
+  height: 700px;
+  background-color: rgba(0, 0, 0, 0.1);
+`;
 
 class Canvas extends Component {
+  state = {
+    shapes: []
+  };
+
   componentDidMount() {
-    this.canvas = new fabric.Canvas("canva-id");
+    this.setCanvas();
   }
+
+  setCanvas = () => {
+    if (!this.canvasContainer) return;
+    this.canvas = new fabric.Canvas("canvas-id");
+    this.canvas.setHeight(this.canvasContainer.offsetHeight);
+    this.canvas.setWidth(this.canvasContainer.offsetWidth);
+  };
+
+  setCanvasContainer = element => {
+    this.canvasContainer = element;
+  };
 
   addRectangle = () => {
     const rectangle = new fabric.Rect({
@@ -17,6 +37,8 @@ class Canvas extends Component {
       width: 200,
       height: 100
     });
+    const shapes = [...this.state.shapes, rectangle];
+    this.setState({ shapes });
 
     this.canvas.add(rectangle);
   };
@@ -27,12 +49,9 @@ class Canvas extends Component {
         <div>
           <button onClick={this.addRectangle}>Rectangle</button>
         </div>
-        <canvas
-          id="canva-id"
-          width="700px"
-          height="1000px"
-          style={{ border: "1px solid black" }}
-        />
+        <CanvasContainer ref={this.setCanvasContainer}>
+          <canvas id="canvas-id" style={{ border: "1px solid black" }} />
+        </CanvasContainer>
       </Container>
     );
   }
