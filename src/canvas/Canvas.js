@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { fabric } from "fabric";
 import styled from "styled-components";
+import clonedeep from "lodash.clonedeep";
 
 const CanvasContainer = styled.div`
   width: 100%;
@@ -32,6 +33,92 @@ class Canvas extends Component {
     this.canvas = new fabric.Canvas("canvas-id");
     this.canvas.setHeight(this.canvasContainer.offsetHeight);
     this.canvas.setWidth(this.canvasContainer.offsetWidth);
+
+    this.canvas.on("object:modified", this.preventObjectToGoOutsideCanvas);
+  };
+
+  _setScalingProperties = (left, top, scale) => {
+    if (
+      this.scalingProperties == null ||
+      this.scalingProperties["scale"] > scale
+    ) {
+      this.scalingProperties = {
+        left: left,
+        top: top,
+        scale: scale
+      };
+    }
+  };
+
+  preventObjectToGoOutsideCanvas = event => {
+    // console.log("triggered", event);
+    const object = event.target;
+    const oldBorder = object.getBoundingRect();
+    object.setCoords();
+    const newBorder = object.getBoundingRect();
+    console.log("old", oldBorder);
+    console.log("new", newBorder);
+    // if border left is going outside the canvas
+    if (oldBorder.left <= 0 && newBorder.left < 0) {
+      let scale = (oldBorder.width + oldBorder.left) / object.width;
+      let height = oldBorder.height * scale;
+      console.log("height", height);
+      console.log("top n", newBorder.top);
+      console.log("top o", oldBorder.top);
+      console.log("height n", newBorder.height);
+      console.log("height o", oldBorder.height);
+      let top =
+        ((newBorder.top - oldBorder.top) /
+          (newBorder.height - oldBorder.height)) *
+          (height - oldBorder.height) +
+        oldBorder.top;
+
+      top = newBorder.top;
+      console.log("top", top);
+      this._setScalingProperties(0, top, 1);
+    }
+    // top border
+    // if(brOld.top >= 0 && brNew.top < 0) {
+    //   let scale = (brOld.height + brOld.top) / obj.height;
+    //   let width = obj.width * scale;
+    //   let left = ((brNew.left - brOld.left) / (brNew.width - brOld.width) *
+    //     (width - brOld.width)) + brOld.left;
+    //   this._setScalingProperties(left, 0, scale);
+    // }
+    // // right border
+    // if(brOld.left + brOld.width <= obj.canvas.width
+    // && brNew.left + brNew.width > obj.canvas.width) {
+    //   let scale = (obj.canvas.width - brOld.left) / obj.width;
+    //   let height = obj.height * scale;
+    //   let top = ((brNew.top - brOld.top) / (brNew.height - brOld.height) *
+    //     (height - brOld.height)) + brOld.top;
+    //   this._setScalingProperties(brNew.left, top, scale);
+    // }
+    // // bottom border
+    // if(brOld.top + brOld.height <= obj.canvas.height
+    // && brNew.top + brNew.height > obj.canvas.height) {
+    //   let scale = (obj.canvas.height - brOld.top) / obj.height;
+    //   let width = obj.width * scale;
+    //   let left = ((brNew.left - brOld.left) / (brNew.width - brOld.width) *
+    //     (width - brOld.width)) + brOld.left;
+    //   this._setScalingProperties(left, brNew.top, scale);
+    // }
+    if (
+      newBorder.left < 0 //||
+      // newBorder.top < 0 ||
+      // newBorder.left + newBorder.width > object.canvas.width ||
+      // newBorder.top + newBorder.height > object.canvas.height
+    ) {
+      // console.log("obj", object);
+      // console.log("scaling", this.scalingProperties);
+      object.left = this.scalingProperties["left"];
+      object.top = this.scalingProperties["top"];
+      object.scaleX = this.scalingProperties["scale"];
+      object.scaleY = this.scalingProperties["scale"];
+      object.setCoords();
+    } else {
+      this.scalingProperties = null;
+    }
   };
 
   resizeCanvas = (width = null, height = null) => {
