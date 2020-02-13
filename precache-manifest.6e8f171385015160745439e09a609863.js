@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1c6022fb9fb8785eb0fd6d14f0e9577e",
+    "revision": "e6760e689c965700f236b036f83f7a51",
     "url": "/reactjs--frist-test-app/index.html"
   },
   {
-    "revision": "485c7c5da3a12c359fff",
+    "revision": "0db47c9e11c782ea19f0",
     "url": "/reactjs--frist-test-app/static/css/main.c7d84c77.chunk.css"
   },
   {
-    "revision": "1c652c4aacccd306d0c9",
-    "url": "/reactjs--frist-test-app/static/js/2.2a0a9a24.chunk.js"
+    "revision": "bf1476039bbcfa955a28",
+    "url": "/reactjs--frist-test-app/static/js/2.51f8846b.chunk.js"
   },
   {
-    "revision": "485c7c5da3a12c359fff",
-    "url": "/reactjs--frist-test-app/static/js/main.c55e0587.chunk.js"
+    "revision": "0db47c9e11c782ea19f0",
+    "url": "/reactjs--frist-test-app/static/js/main.2ec9123b.chunk.js"
   },
   {
     "revision": "6c9757eb8b41b1a736f8",
