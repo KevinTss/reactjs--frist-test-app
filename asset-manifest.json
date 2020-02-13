@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.c7d84c77.chunk.css",
-    "main.js": "/static/js/main.074becb0.chunk.js",
-    "main.js.map": "/static/js/main.074becb0.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.68ea0707.js",
-    "runtime-main.js.map": "/static/js/runtime-main.68ea0707.js.map",
-    "static/js/2.a0156d84.chunk.js": "/static/js/2.a0156d84.chunk.js",
-    "static/js/2.a0156d84.chunk.js.map": "/static/js/2.a0156d84.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.a68445f776cfc5e8cc3e58cbd7dbcf92.js": "/precache-manifest.a68445f776cfc5e8cc3e58cbd7dbcf92.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.c7d84c77.chunk.css.map": "/static/css/main.c7d84c77.chunk.css.map"
+    "main.css": "/reactjs--frist-test-app/static/css/main.c7d84c77.chunk.css",
+    "main.js": "/reactjs--frist-test-app/static/js/main.c55e0587.chunk.js",
+    "main.js.map": "/reactjs--frist-test-app/static/js/main.c55e0587.chunk.js.map",
+    "runtime-main.js": "/reactjs--frist-test-app/static/js/runtime-main.b652ac84.js",
+    "runtime-main.js.map": "/reactjs--frist-test-app/static/js/runtime-main.b652ac84.js.map",
+    "static/js/2.2a0a9a24.chunk.js": "/reactjs--frist-test-app/static/js/2.2a0a9a24.chunk.js",
+    "static/js/2.2a0a9a24.chunk.js.map": "/reactjs--frist-test-app/static/js/2.2a0a9a24.chunk.js.map",
+    "index.html": "/reactjs--frist-test-app/index.html",
+    "precache-manifest.8dd6f8f831bfa712d672c7bdb6f4d176.js": "/reactjs--frist-test-app/precache-manifest.8dd6f8f831bfa712d672c7bdb6f4d176.js",
+    "service-worker.js": "/reactjs--frist-test-app/service-worker.js",
+    "static/css/main.c7d84c77.chunk.css.map": "/reactjs--frist-test-app/static/css/main.c7d84c77.chunk.css.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.68ea0707.js",
-    "static/js/2.a0156d84.chunk.js",
+    "static/js/runtime-main.b652ac84.js",
+    "static/js/2.2a0a9a24.chunk.js",
     "static/css/main.c7d84c77.chunk.css",
-    "static/js/main.074becb0.chunk.js"
+    "static/js/main.c55e0587.chunk.js"
   ]
 }
