@@ -11,10 +11,6 @@ const Container = styled.div`
   position: relative;
 `;
 
-const setTranslate = (xPos, yPos, el) => {
-  el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-};
-
 class ImageZone extends Component {
   state = {
     image: null,
@@ -23,13 +19,16 @@ class ImageZone extends Component {
 
   constructor() {
     super();
-    this.currentX = undefined;
-    this.currentY = undefined;
-    this.initialX = undefined;
-    this.initialY = undefined;
-    this.xOffset = 0;
-    this.yOffset = 0;
-    this.active = false;
+    this.target = null;
+    this.state = {
+      currentX: undefined,
+      currentY: undefined,
+      initialX: undefined,
+      initialY: undefined,
+      xOffset: 0,
+      yOffset: 0,
+      active: false
+    };
   }
 
   componentDidMount() {
@@ -54,6 +53,7 @@ class ImageZone extends Component {
       callback(this);
     };
     img.src = imageSource;
+    img.setAttribute("draggable", false);
   };
 
   addZones = zones => {
@@ -73,59 +73,47 @@ class ImageZone extends Component {
   };
 
   onDragStart = event => {
-    console.log("start");
-    this.active = true;
-    this.initialX = event.clientX - this.xOffset;
-    this.initialY = event.clientY - this.yOffset;
+    console.log("onDragStart");
+    this.target = event.target;
+    this.setState({
+      active: true,
+      initialX: event.clientX - this.state.xOffset,
+      initialY: event.clientY - this.state.yOffset
+    });
   };
 
   onDrag = event => {
     console.log("onDrag");
-    if (!this.active) return;
-    this.currentX = event.clientX - this.initialX;
-    this.currentY = event.clientY - this.initialY;
-    this.xOffset = this.currentX;
-    this.yOffset = this.currentY;
-    setTranslate(this.currentX, this.currentY, event.target);
-    // console.log("drag", event.clientX);
-
-    // const initialX = event.clientX - xOffset;
-    // const initialY = event.clientY - yOffset;
-    // const newPosX = event.offsetX;
-    // const newPosY = event.offsetY;
-    // const el = event.target;
-    // const offsetY = el.offsetTop;
-    // const offsetX = el.offsetLeft;
-    // el.style.top = `${newPosY}px`;
-    // el.style.left = `${newPosX}px`;
+    if (!this.state.active) return;
+    this.setState({
+      currentX: event.clientX - this.state.initialX,
+      currentY: event.clientY - this.state.initialY
+    });
   };
 
   onDrop = event => {
-    console.log("stop");
-    // console.log("drop", event);
-    this.initialX = this.currentX;
-    this.initialY = this.currentY;
-    this.active = false;
+    console.log("onDrop");
+    this.target = null;
+    this.setState({
+      initialX: this.state.currentX,
+      initialY: this.state.currentY,
+      active: false
+    });
   };
 
   drawRectangle = zone => {
     console.log("zone to draw", zone);
     const rectangle = document.createElement("div");
     rectangle.setAttribute("id", `zone-shape-${zone.idx}`);
-    rectangle.setAttribute("draggable", true);
-    rectangle.style.width = `${zone.w}px`;
-    rectangle.style.height = `${zone.h}px`;
-    rectangle.style.position = "absolute";
-    rectangle.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
-    rectangle.style.top = `${zone.x}px`;
-    rectangle.style.left = `${zone.y}px`;
-    rectangle.addEventListener("mousedown", this.onDragStart);
-    rectangle.addEventListener("mousemove", this.onDrag);
-    rectangle.addEventListener("mouseup", this.onDrop);
     this.container.appendChild(rectangle);
   };
 
   render() {
+    const { zones } = this.props;
+    const [zone] = zones;
+
+    const { currentX, currentY } = this.state;
+
     return (
       <Fragment>
         <button
@@ -136,10 +124,26 @@ class ImageZone extends Component {
           See state
         </button>
         <Container
+          onMouseMove={this.onDrag}
+          onMouseUp={this.onDrop}
           ref={el => {
             this.container = el;
           }}
-        />
+        >
+          <div
+            onMouseDown={this.onDragStart}
+            style={{
+              width: `${zone.w}px`,
+              height: `${zone.h}px`,
+              position: "absolute",
+              backgroundColor: "rgba(255, 255, 0, 0.5)",
+              top: `${zone.x}px`,
+              left: `${zone.y}px`,
+              transform:
+                "translate3d(" + currentX + "px, " + currentY + "px, 0)"
+            }}
+          />
+        </Container>
       </Fragment>
     );
   }
