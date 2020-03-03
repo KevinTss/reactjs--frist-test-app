@@ -9,6 +9,7 @@ import DragAndDropPage from "./drag-and-drop/Page";
 import FormValidationPage from "./form-validation/Page";
 import CanvasPage from "./canvas/Page";
 import ImageZonePage from "./image-zone/Page";
+import Recharts from "./recharts/Page";
 
 const HomePage = () => (
   <Layout
@@ -19,6 +20,7 @@ const HomePage = () => (
         <Link to="/drag-and-drop">Drag and drop</Link>
         <Link to="/canvas">Canvas</Link>
         <Link to="/image-zone">Image zone</Link>
+        <Link to="/recharts">Recharts</Link>
       </Fragment>
     }
   />
@@ -33,6 +35,7 @@ class App extends Component {
         <Route path="/drag-and-drop" component={DragAndDropPage} />
         <Route path="/canvas" component={CanvasPage} />
         <Route path="/image-zone" component={ImageZonePage} />
+        <Route path="/recharts" component={Recharts} />
       </Router>
     );
   }
